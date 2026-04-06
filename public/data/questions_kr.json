@@ -1,0 +1,85 @@
+{
+    "test_id": "p4_ipip_bffm_50",
+    "test_name": "P4 Profile (Persona · Personality · Preference · Profile)",
+    "version": "1.0",
+    "license_note": "문항은 IPIP 퍼블릭 도메인 아이템 풀을 기반으로 합니다. IPIP 사이트 안내에 따라 별도 허가 없이 복사/편집/번역/사용할 수 있습니다.",
+    "scale": {
+      "type": "likert_5",
+      "labels": [
+        { "value": 1, "text": "전혀 그렇지 않다" },
+        { "value": 2, "text": "별로 그렇지 않다" },
+        { "value": 3, "text": "보통이다" },
+        { "value": 4, "text": "대체로 그렇다" },
+        { "value": 5, "text": "매우 그렇다" }
+      ]
+    },
+    "traits": [
+      { "id": "E", "name": "외향성(Extraversion)" },
+      { "id": "A", "name": "우호성(Agreeableness)" },
+      { "id": "C", "name": "성실성(Conscientiousness)" },
+      { "id": "N", "name": "신경성(Neuroticism)" },
+      { "id": "O", "name": "개방성(Openness)" }
+    ],
+    "questions": [
+      { "id": 1, "text": "파티에서 분위기를 주도하는 편이다.", "trait": "E", "reverse": false },
+      { "id": 2, "text": "다른 사람에 대한 배려가 거의 없다.", "trait": "A", "reverse": true },
+      { "id": 3, "text": "늘 준비가 되어 있는 편이다.", "trait": "C", "reverse": false },
+      { "id": 4, "text": "스트레스를 쉽게 받는다.", "trait": "N", "reverse": false },
+      { "id": 5, "text": "어휘가 풍부하다.", "trait": "O", "reverse": false },
+  
+      { "id": 6, "text": "말이 많지 않다.", "trait": "E", "reverse": true },
+      { "id": 7, "text": "사람들에게 관심이 있다.", "trait": "A", "reverse": false },
+      { "id": 8, "text": "물건을 여기저기 어질러 놓는 편이다.", "trait": "C", "reverse": true },
+      { "id": 9, "text": "대체로 편안하고 여유로운 편이다.", "trait": "N", "reverse": true },
+      { "id": 10, "text": "추상적인 아이디어를 이해하는 데 어려움이 있다.", "trait": "O", "reverse": true },
+  
+      { "id": 11, "text": "사람들 주변에서 편안함을 느낀다.", "trait": "E", "reverse": false },
+      { "id": 12, "text": "사람들을 모욕한다.", "trait": "A", "reverse": true },
+      { "id": 13, "text": "세부적인 것에 주의를 기울인다.", "trait": "C", "reverse": false },
+      { "id": 14, "text": "이것저것 걱정을 많이 한다.", "trait": "N", "reverse": false },
+      { "id": 15, "text": "상상력이 풍부하다.", "trait": "O", "reverse": false },
+  
+      { "id": 16, "text": "뒤로 물러나 있는 편이다.", "trait": "E", "reverse": true },
+      { "id": 17, "text": "다른 사람의 감정에 공감한다.", "trait": "A", "reverse": false },
+      { "id": 18, "text": "일을 어지럽게 만들곤 한다.", "trait": "C", "reverse": true },
+      { "id": 19, "text": "우울함을 거의 느끼지 않는다.", "trait": "N", "reverse": true },
+      { "id": 20, "text": "추상적인 아이디어에는 관심이 없다.", "trait": "O", "reverse": true },
+  
+      { "id": 21, "text": "대화를 먼저 시작하는 편이다.", "trait": "E", "reverse": false },
+      { "id": 22, "text": "다른 사람의 문제에 관심이 없다.", "trait": "A", "reverse": true },
+      { "id": 23, "text": "집안일을 바로바로 처리한다.", "trait": "C", "reverse": false },
+      { "id": 24, "text": "쉽게 신경이 거슬린다.", "trait": "N", "reverse": false },
+      { "id": 25, "text": "아이디어가 매우 좋다.", "trait": "O", "reverse": false },
+  
+      { "id": 26, "text": "할 말이 별로 없다.", "trait": "E", "reverse": true },
+      { "id": 27, "text": "마음이 따뜻하다.", "trait": "A", "reverse": false },
+      { "id": 28, "text": "물건을 제자리에 두는 것을 자주 잊는다.", "trait": "C", "reverse": true },
+      { "id": 29, "text": "쉽게 속상해진다.", "trait": "N", "reverse": false },
+      { "id": 30, "text": "상상력이 좋지 않다.", "trait": "O", "reverse": true },
+  
+      { "id": 31, "text": "파티에서 다양한 사람들과 이야기한다.", "trait": "E", "reverse": false },
+      { "id": 32, "text": "다른 사람들에게 별로 관심이 없다.", "trait": "A", "reverse": true },
+      { "id": 33, "text": "정돈되어 있는 것을 좋아한다.", "trait": "C", "reverse": false },
+      { "id": 34, "text": "기분 변화가 잦다.", "trait": "N", "reverse": false },
+      { "id": 35, "text": "이해가 빠르다.", "trait": "O", "reverse": false },
+  
+      { "id": 36, "text": "나 자신에게 관심이 집중되는 것을 좋아하지 않는다.", "trait": "E", "reverse": true },
+      { "id": 37, "text": "다른 사람을 위해 시간을 낸다.", "trait": "A", "reverse": false },
+      { "id": 38, "text": "해야 할 일을 회피한다.", "trait": "C", "reverse": true },
+      { "id": 39, "text": "기분이 자주 오르락내리락한다.", "trait": "N", "reverse": false },
+      { "id": 40, "text": "어려운 단어를 사용한다.", "trait": "O", "reverse": false },
+  
+      { "id": 41, "text": "사람들의 관심 중심이 되는 것을 개의치 않는다.", "trait": "E", "reverse": false },
+      { "id": 42, "text": "다른 사람의 감정을 느낀다(잘 알아차린다).", "trait": "A", "reverse": false },
+      { "id": 43, "text": "일정(스케줄)을 따른다.", "trait": "C", "reverse": false },
+      { "id": 44, "text": "쉽게 짜증이 난다.", "trait": "N", "reverse": false },
+      { "id": 45, "text": "생각을 되돌아보는 데 시간을 쓴다.", "trait": "O", "reverse": false },
+  
+      { "id": 46, "text": "낯선 사람들 앞에서는 조용한 편이다.", "trait": "E", "reverse": true },
+      { "id": 47, "text": "사람들을 편안하게 해준다.", "trait": "A", "reverse": false },
+      { "id": 48, "text": "일할 때 꼼꼼하고 엄격한 편이다.", "trait": "C", "reverse": false },
+      { "id": 49, "text": "우울함을 자주 느낀다.", "trait": "N", "reverse": false },
+      { "id": 50, "text": "아이디어가 많다.", "trait": "O", "reverse": false }
+    ]
+  }
+  
