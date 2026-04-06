@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Brain, Users, Gamepad2 } from 'lucide-react';
+import { Brain, Users, Gamepad2, GitCompare, Eye } from 'lucide-react';
 import useLangStore from '../store/langStore';
 import { t } from '../i18n/texts';
 
@@ -7,6 +7,8 @@ const tabs = [
   { path: '/personality', icon: Brain, labelKey: 'tab_personality' },
   { path: '/persona', icon: Users, labelKey: 'tab_persona' },
   { path: '/play', icon: Gamepad2, labelKey: 'tab_play' },
+  { path: '/pairing', icon: GitCompare, labelKey: 'tab_pairing' },
+  { path: '/perception', icon: Eye, labelKey: 'tab_perception' },
 ];
 
 export default function Layout() {

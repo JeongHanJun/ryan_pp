@@ -1,0 +1,64 @@
+{
+  "categories": [
+    {
+      "id": "lifestyle",
+      "label_kr": "생활 방식",
+      "label_en": "Lifestyle",
+      "pairs": [
+        { "id": "ls_1", "a": { "kr": "아침형 인간", "en": "Morning person" }, "b": { "kr": "저녁형 인간", "en": "Night owl" } },
+        { "id": "ls_2", "a": { "kr": "계획 세우고 움직이기", "en": "Plan everything ahead" }, "b": { "kr": "그때그때 즉흥적으로", "en": "Go with the flow" } },
+        { "id": "ls_3", "a": { "kr": "집에서 쉬기", "en": "Stay home and relax" }, "b": { "kr": "밖에 나가 돌아다니기", "en": "Go out and explore" } },
+        { "id": "ls_4", "a": { "kr": "혼자 하는 취미", "en": "Solo hobbies" }, "b": { "kr": "함께 하는 취미", "en": "Group activities" } },
+        { "id": "ls_5", "a": { "kr": "깔끔하게 정리된 공간", "en": "Neat and organized space" }, "b": { "kr": "나만의 카오스 속 편안함", "en": "Comfortable chaos" } },
+        { "id": "ls_6", "a": { "kr": "일찍 자고 일찍 일어나기", "en": "Early to bed, early to rise" }, "b": { "kr": "늦게 자도 늦게 일어나기", "en": "Late to bed, late to rise" } },
+        { "id": "ls_7", "a": { "kr": "루틴대로 살기", "en": "Stick to a routine" }, "b": { "kr": "매일 다르게 살기", "en": "Change things up daily" } },
+        { "id": "ls_8", "a": { "kr": "빠른 결정", "en": "Decide quickly" }, "b": { "kr": "충분히 고민 후 결정", "en": "Think it through carefully" } }
+      ]
+    },
+    {
+      "id": "travel",
+      "label_kr": "여행 스타일",
+      "label_en": "Travel Style",
+      "pairs": [
+        { "id": "tr_1", "a": { "kr": "도시 여행", "en": "City trip" }, "b": { "kr": "자연 속 여행", "en": "Nature trip" } },
+        { "id": "tr_2", "a": { "kr": "여름 바다", "en": "Summer beach" }, "b": { "kr": "겨울 설원", "en": "Winter snow" } },
+        { "id": "tr_3", "a": { "kr": "호텔에서 푹 쉬기", "en": "Relax at a nice hotel" }, "b": { "kr": "하루 종일 돌아다니기", "en": "Explore all day long" } },
+        { "id": "tr_4", "a": { "kr": "맛집 탐방 중심", "en": "Food-focused travel" }, "b": { "kr": "관광지·문화 중심", "en": "Sightseeing & culture" } },
+        { "id": "tr_5", "a": { "kr": "여행 계획 미리 짜기", "en": "Plan the trip in detail" }, "b": { "kr": "현지에서 즉흥적으로", "en": "Wing it on arrival" } },
+        { "id": "tr_6", "a": { "kr": "국내 여행", "en": "Domestic travel" }, "b": { "kr": "해외 여행", "en": "International travel" } },
+        { "id": "tr_7", "a": { "kr": "혼자 떠나는 여행", "en": "Solo travel" }, "b": { "kr": "친구·가족과 함께", "en": "Travel with others" } },
+        { "id": "tr_8", "a": { "kr": "유명 관광지 필수 방문", "en": "Must-see famous spots" }, "b": { "kr": "현지인처럼 숨은 곳 찾기", "en": "Hidden local gems" } }
+      ]
+    },
+    {
+      "id": "food",
+      "label_kr": "음식 취향",
+      "label_en": "Food Preference",
+      "pairs": [
+        { "id": "fd_1", "a": { "kr": "달콤한 것", "en": "Sweet" }, "b": { "kr": "짭짤한 것", "en": "Salty" } },
+        { "id": "fd_2", "a": { "kr": "매운 음식", "en": "Spicy food" }, "b": { "kr": "순한 음식", "en": "Mild food" } },
+        { "id": "fd_3", "a": { "kr": "한식", "en": "Korean food" }, "b": { "kr": "양식", "en": "Western food" } },
+        { "id": "fd_4", "a": { "kr": "따뜻한 음식", "en": "Hot food" }, "b": { "kr": "차가운 음식", "en": "Cold food" } },
+        { "id": "fd_5", "a": { "kr": "커피", "en": "Coffee" }, "b": { "kr": "차(Tea)", "en": "Tea" } },
+        { "id": "fd_6", "a": { "kr": "혼자 먹는 밥", "en": "Eating alone" }, "b": { "kr": "같이 먹는 밥", "en": "Eating with others" } },
+        { "id": "fd_7", "a": { "kr": "집밥", "en": "Home-cooked meal" }, "b": { "kr": "외식", "en": "Dining out" } },
+        { "id": "fd_8", "a": { "kr": "익숙한 단골 메뉴", "en": "Usual favorite order" }, "b": { "kr": "새로운 메뉴 도전", "en": "Try something new" } }
+      ]
+    },
+    {
+      "id": "values",
+      "label_kr": "가치관",
+      "label_en": "Values",
+      "pairs": [
+        { "id": "vl_1", "a": { "kr": "안정적인 삶", "en": "Stable life" }, "b": { "kr": "도전적인 삶", "en": "Adventurous life" } },
+        { "id": "vl_2", "a": { "kr": "지금 이 순간 즐기기", "en": "Live in the present" }, "b": { "kr": "미래를 위해 준비하기", "en": "Plan for the future" } },
+        { "id": "vl_3", "a": { "kr": "돈", "en": "Money" }, "b": { "kr": "시간", "en": "Time" } },
+        { "id": "vl_4", "a": { "kr": "인정받는 삶", "en": "Recognition from others" }, "b": { "kr": "나만의 만족", "en": "Personal satisfaction" } },
+        { "id": "vl_5", "a": { "kr": "소수의 깊은 관계", "en": "Few deep relationships" }, "b": { "kr": "다양한 넓은 인맥", "en": "Many wide connections" } },
+        { "id": "vl_6", "a": { "kr": "논리와 이성", "en": "Logic and reason" }, "b": { "kr": "감정과 직관", "en": "Emotion and intuition" } },
+        { "id": "vl_7", "a": { "kr": "팀플레이", "en": "Teamwork" }, "b": { "kr": "개인 플레이", "en": "Working alone" } },
+        { "id": "vl_8", "a": { "kr": "말로 표현하기", "en": "Express with words" }, "b": { "kr": "행동으로 보여주기", "en": "Show through actions" } }
+      ]
+    }
+  ]
+}

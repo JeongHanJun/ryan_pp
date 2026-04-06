@@ -8,6 +8,9 @@ import AppleGame from '../games/AppleGame';
 import StorkGame from '../games/StorkGame';
 import TileMatchGame from '../games/TileMatchGame';
 import PinballLadderGame from '../games/PinballLadderGame';
+import PaceGame from '../games/PaceGame';
+import PatternGame from '../games/PatternGame';
+import PinpointGame from '../games/PinpointGame';
 import useLangStore from '../store/langStore';
 import { t } from '../i18n/texts';
 
@@ -53,6 +56,36 @@ const GAMES = [
     bg: 'bg-indigo-50',
     border: 'border-indigo-200',
     btnColor: 'bg-indigo-500 hover:bg-indigo-600',
+  },
+  {
+    id: 'pace',
+    emoji: '⚡',
+    thumbnail: null,
+    subtitle: 'Reaction Time',
+    color: 'from-cyan-400 to-blue-500',
+    bg: 'bg-cyan-50',
+    border: 'border-cyan-200',
+    btnColor: 'bg-cyan-500 hover:bg-cyan-600',
+  },
+  {
+    id: 'pattern',
+    emoji: '🎮',
+    thumbnail: null,
+    subtitle: 'Simon Says',
+    color: 'from-purple-400 to-pink-500',
+    bg: 'bg-purple-50',
+    border: 'border-purple-200',
+    btnColor: 'bg-purple-500 hover:bg-purple-600',
+  },
+  {
+    id: 'pinpoint',
+    emoji: '🌍',
+    thumbnail: null,
+    subtitle: 'World Map Quiz',
+    color: 'from-emerald-400 to-teal-600',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-200',
+    btnColor: 'bg-emerald-500 hover:bg-emerald-600',
   },
 ];
 
@@ -222,6 +255,15 @@ export default function PlayPage() {
           )}
           {selectedGame === 'pinball_ladder' && (
             <PinballLadderGame onGameEnd={() => {}} />
+          )}
+          {selectedGame === 'pace' && (
+            <PaceGame onGameEnd={() => {}} lang={lang} />
+          )}
+          {selectedGame === 'pattern' && (
+            <PatternGame onGameEnd={() => {}} lang={lang} />
+          )}
+          {selectedGame === 'pinpoint' && (
+            <PinpointGame onGameEnd={() => {}} lang={lang} />
           )}
         </div>
       )}
