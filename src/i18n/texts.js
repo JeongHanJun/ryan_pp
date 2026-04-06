@@ -91,7 +91,7 @@ const texts = {
     pref_need_test: 'Big5 검사를 1회 이상 완료한 사용자만 이용할 수 있습니다.',
 
     // Aptitude
-    tab_aptitude: 'Practice',
+    tab_aptitude: 'Aptitude',
     apt_home_title: '인성검사 연습',
     apt_home_subtitle: 'GSAT · HMAT · SKCT 유형별 연습',
     apt_home_desc: '실제 시험과 유사한 연습으로 응답 일관성을 높여보세요.',
@@ -212,7 +212,7 @@ const texts = {
     pref_need_test: 'Available after completing the Big5 test at least once.',
 
     // Aptitude
-    tab_aptitude: 'Practice',
+    tab_aptitude: 'Aptitude',
     apt_home_title: 'Aptitude Practice',
     apt_home_subtitle: 'GSAT · HMAT · SKCT Practice',
     apt_home_desc: 'Practice with exam-style questions and improve your response consistency.',

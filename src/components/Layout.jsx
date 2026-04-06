@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Brain, Users, Gamepad2, BarChart3, ClipboardList, Globe } from 'lucide-react';
+import { Brain, Users, Gamepad2 } from 'lucide-react';
 import useLangStore from '../store/langStore';
 import { t } from '../i18n/texts';
 
@@ -7,8 +7,6 @@ const tabs = [
   { path: '/personality', icon: Brain, labelKey: 'tab_personality' },
   { path: '/persona', icon: Users, labelKey: 'tab_persona' },
   { path: '/play', icon: Gamepad2, labelKey: 'tab_play' },
-  { path: '/aptitude', icon: ClipboardList, labelKey: 'tab_aptitude' },
-  { path: '/preference', icon: BarChart3, labelKey: 'tab_preference' },
 ];
 
 export default function Layout() {
@@ -31,10 +29,15 @@ export default function Layout() {
             </div>
             <button
               onClick={toggleLang}
-              className="p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-100 rounded-lg transition-colors"
-              title={lang === 'kr' ? 'English' : '한국어'}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-200 hover:border-primary-400 transition-colors"
             >
-              <Globe size={18} />
+              <span className={lang === 'kr' ? 'text-primary-700 font-semibold' : 'text-gray-400'}>
+                Korean
+              </span>
+              <span className="text-gray-300 mx-0.5">|</span>
+              <span className={lang === 'en' ? 'text-primary-700 font-semibold' : 'text-gray-400'}>
+                English
+              </span>
             </button>
           </div>
 
