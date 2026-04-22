@@ -3,6 +3,9 @@ import { Clock, ListChecks, ArrowLeft, ArrowRight, Home, Sparkles } from 'lucide
 import useLangStore from '../store/langStore';
 import { t } from '../i18n/texts';
 import * as api from '../api/persona';
+import * as resultsApi from '../api/results';
+import useAuthStore from '../store/authStore';
+import usePopularStore from '../store/popularStore';
 
 const PER_PAGE = 10;
 
@@ -76,6 +79,7 @@ export default function PersonaPage() {
   const topRef = useRef(null);
 
   const { lang } = useLangStore();
+  const user = useAuthStore((s) => s.user);
   const axisInfo = AXIS_INFO[lang] || AXIS_INFO.en;
 
   const reset = () => {
@@ -133,6 +137,22 @@ export default function PersonaPage() {
       const res = await api.submitAttempt(null, answers, selectedSet.id, lang);
       setResult(res.data);
       setMode('result');
+
+      // Logged-in: persist MBTI result (fire-and-forget).
+      if (user && res.data?.character) {
+        resultsApi
+          .submitMbti({
+            test_code: 'mbti_v1',
+            mbti_type: res.data.mbti_type,
+            score_0_100: res.data.score_0_100,
+            character_set: selectedSet.id,
+            character_id: res.data.character.id,
+            answers,
+            lang,
+          })
+          .then(() => usePopularStore.getState().fetch({ force: true }))
+          .catch((err) => console.warn('mbti save failed', err));
+      }
     } catch {
       setError(t(lang, 'error'));
     } finally {

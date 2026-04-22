@@ -12,6 +12,10 @@ import PaceGame from '../games/PaceGame';
 import PatternGame from '../games/PatternGame';
 import PinpointGame from '../games/PinpointGame';
 import useLangStore from '../store/langStore';
+import useAuthStore from '../store/authStore';
+import * as resultsApi from '../api/results';
+import * as localGame from '../api/game';
+import usePopularStore from '../store/popularStore';
 import { t } from '../i18n/texts';
 
 const GAMES = [
@@ -158,7 +162,11 @@ function BGMControls({ bgm }) {
 export default function PlayPage() {
   const bgm = useBGM();
   const lang = useLangStore(s => s.lang);
+  const user = useAuthStore(s => s.user);
   const [selectedGame, setSelectedGame] = useState(null);
+
+  // Guests see only Pinball. Logged-in users see the full catalog.
+  const visibleGames = user ? GAMES : GAMES.filter((g) => g.id === 'pinball_ladder');
 
   // Play 탭 진입 시 자동 재생
   useEffect(() => {
@@ -174,6 +182,20 @@ export default function PlayPage() {
     setSelectedGame(null);
   };
 
+  // Unified game-end handler: log score to server (if logged in) + localStorage fallback.
+  const makeOnGameEnd = (gameType) => (rawScore) => {
+    const score = Math.max(0, Math.round(Number(rawScore) || 0));
+    if (user) {
+      resultsApi
+        .submitGame({ game_type: gameType, score })
+        .then(() => usePopularStore.getState().fetch({ force: true }))
+        .catch((err) => console.warn('game save failed', err));
+    } else {
+      // Guests still get local best tracking for continuity.
+      localGame.saveGameScore(gameType, score);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 max-w-4xl mx-auto">
       {/* BGM 컨트롤 바 */}
@@ -186,7 +208,7 @@ export default function PlayPage() {
         <div>
           <h2 className="text-xl font-bold text-gray-700 mb-4 text-center">{t(lang, 'play_game_select')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {GAMES.map(game => (
+            {visibleGames.map(game => (
               <div
                 key={game.id}
                 className={`rounded-2xl border-2 ${game.border} ${game.bg} p-6 flex flex-col items-center gap-3 shadow-sm hover:shadow-md transition-shadow`}
@@ -245,25 +267,25 @@ export default function PlayPage() {
 
           {/* 게임 컴포넌트 */}
           {selectedGame === 'apple' && (
-            <AppleGame onGameEnd={() => {}} />
+            <AppleGame onGameEnd={makeOnGameEnd('apple')} />
           )}
           {selectedGame === 'stork' && (
-            <StorkGame onGameEnd={() => {}} />
+            <StorkGame onGameEnd={makeOnGameEnd('stork')} />
           )}
           {selectedGame === 'tile_match' && (
-            <TileMatchGame onGameEnd={() => {}} />
+            <TileMatchGame onGameEnd={makeOnGameEnd('tile_match')} />
           )}
           {selectedGame === 'pinball_ladder' && (
-            <PinballLadderGame onGameEnd={() => {}} />
+            <PinballLadderGame />
           )}
           {selectedGame === 'pace' && (
-            <PaceGame onGameEnd={() => {}} lang={lang} />
+            <PaceGame onGameEnd={makeOnGameEnd('pace')} lang={lang} />
           )}
           {selectedGame === 'pattern' && (
-            <PatternGame onGameEnd={() => {}} lang={lang} />
+            <PatternGame onGameEnd={makeOnGameEnd('pattern')} lang={lang} />
           )}
           {selectedGame === 'pinpoint' && (
-            <PinpointGame onGameEnd={() => {}} lang={lang} />
+            <PinpointGame onGameEnd={makeOnGameEnd('pinpoint')} lang={lang} />
           )}
         </div>
       )}

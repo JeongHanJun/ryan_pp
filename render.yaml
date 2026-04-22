@@ -1,0 +1,22 @@
+# Render Blueprint for the FastAPI backend.
+# Create via: Render dashboard → New + → Blueprint → select this repo.
+
+services:
+  - type: web
+    name: ryanpp-api
+    runtime: python
+    plan: free
+    region: singapore  # same region as Neon (ap-southeast-1) → low DB latency
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      # Secrets: set these values manually in the Render dashboard.
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://www.ryanpp.com,https://ryanpp.com
+      - key: PYTHON_VERSION
+        value: "3.13.0"

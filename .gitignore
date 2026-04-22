@@ -1,0 +1,29 @@
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# Python / backend
+__pycache__/
+*.pyc
+*.pyo
+backend/.venv/
+backend/venv/
+.venv/
+venv/
+
+# Env files (never commit)
+.env
+.env.local
+backend/.env
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Legacy dev artifacts
+typeplay.db
+typeplay.db-shm
+typeplay.db-wal

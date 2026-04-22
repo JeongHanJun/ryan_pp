@@ -5,6 +5,9 @@ import { t, traitInfo } from '../i18n/texts';
 import RadarChart from '../components/RadarChart';
 import HBarChart from '../components/BarChart';
 import * as api from '../api/personality';
+import * as resultsApi from '../api/results';
+import useAuthStore from '../store/authStore';
+import usePopularStore from '../store/popularStore';
 
 const PER_PAGE = 10;
 const SCORE_HIGH = 65;
@@ -29,6 +32,7 @@ export default function PersonalityPage() {
   const topRef = useRef(null);
 
   const { lang } = useLangStore();
+  const user = useAuthStore((s) => s.user);
 
   const reset = () => {
     setMode('home');
@@ -92,6 +96,20 @@ export default function PersonalityPage() {
       const res = await api.submitAttempt(null, answers, lang);
       setScorePack(res.data.score_pack);
       setMode('result');
+
+      // Logged-in: persist result to backend, then invalidate Popular cache
+      // so the next visit shows the new result instantly.
+      if (user) {
+        resultsApi
+          .submitBig5({
+            test_code: 'big5_v1',
+            score_0_100: res.data.score_pack.score_0_100,
+            answers,
+            lang,
+          })
+          .then(() => usePopularStore.getState().fetch({ force: true }))
+          .catch((err) => console.warn('big5 save failed', err));
+      }
     } catch {
       setError(t(lang, 'error'));
     } finally {
