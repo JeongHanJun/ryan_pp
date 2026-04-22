@@ -19,4 +19,4 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://www.ryanpp.com,https://ryanpp.com
       - key: PYTHON_VERSION
-        value: "3.13.0"
+        value: "3.12.7"
