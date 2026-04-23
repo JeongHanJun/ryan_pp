@@ -16,14 +16,16 @@ import { t } from '../i18n/texts';
 
 // ── Meta / labels ────────────────────────────────────────────────────────
 
-const GAME_META = {
-  apple:          { emoji: '🍎', label_kr: '애플 게임',   label_en: 'Apple Game' },
-  stork:          { emoji: '🕊️', label_kr: '스토크',     label_en: 'Stork' },
-  tile_match:     { emoji: '🧩', label_kr: '타일 매치',   label_en: 'Tile Match' },
-  pinball_ladder: { emoji: '🎰', label_kr: '핀볼 사다리', label_en: 'Pinball Ladder' },
-  pace:           { emoji: '⚡', label_kr: '반응속도',    label_en: 'Pace' },
-  pattern:        { emoji: '🎮', label_kr: '패턴',        label_en: 'Pattern' },
-  pinpoint:       { emoji: '🌍', label_kr: '핀포인트',    label_en: 'Pinpoint' },
+// Emojis mirror the Play tab's card art. Titles themselves come from the
+// i18n dictionary (`play_{id}_title`) so Popular and Play always agree.
+const GAME_EMOJI = {
+  apple: '🍎',
+  stork: '🕊️',
+  tile_match: '🧩',
+  pinball_ladder: '🎰',
+  pace: '⚡',
+  pattern: '🎮',
+  pinpoint: '🌍',
 };
 
 const MBTI_TYPES_ORDER = [
@@ -34,9 +36,17 @@ const MBTI_TYPES_ORDER = [
 ];
 
 function gameLabel(key, lang) {
-  const meta = GAME_META[key];
-  if (!meta) return key;
-  return `${meta.emoji} ${lang === 'kr' ? meta.label_kr : meta.label_en}`;
+  const emoji = GAME_EMOJI[key];
+  const title = t(lang, `play_${key}_title`);
+  // If the key isn't one we know, t() returns the key itself — fall back cleanly.
+  if (!emoji) return title;
+  return `${emoji} ${title}`;
+}
+
+// Stork's stored score IS distance in meters (see StorkGame.jsx DISTANCE_SCALE).
+function formatGameScore(gameType, score) {
+  if (gameType === 'stork') return `${score}m`;
+  return String(score);
 }
 
 function birthDecadeLabel(year, lang) {
@@ -225,7 +235,7 @@ function TimelineList({ items, lang }) {
     const when = new Date(item.created_at).toLocaleString();
     if (item.kind === 'game') {
       const [gtype, score] = item.summary.split(':');
-      return `${gameLabel(gtype, lang)} — ${score}`;
+      return `${gameLabel(gtype, lang)} — ${formatGameScore(gtype, score)}`;
     }
     if (item.kind === 'mbti') {
       return `MBTI · ${item.summary}`;
@@ -351,7 +361,7 @@ function LeaderboardCard({ boards, lang }) {
                       <span className="text-xs text-gray-400 w-5">{row.rank}.</span>
                       <span className="truncate">{row.display_name}</span>
                     </span>
-                    <span className="text-xs tabular-nums">{row.best_score}</span>
+                    <span className="text-xs tabular-nums">{formatGameScore(lb.game_type, row.best_score)}</span>
                   </li>
                 ))}
                 {lb.me && (
@@ -360,7 +370,7 @@ function LeaderboardCard({ boards, lang }) {
                       <span className="text-xs text-gray-400 w-5">{lb.me.rank}.</span>
                       <span className="truncate">{lb.me.display_name} ({t(lang, 'popular_my_rank')})</span>
                     </span>
-                    <span className="text-xs tabular-nums">{lb.me.best_score}</span>
+                    <span className="text-xs tabular-nums">{formatGameScore(lb.game_type, lb.me.best_score)}</span>
                   </li>
                 )}
               </ol>

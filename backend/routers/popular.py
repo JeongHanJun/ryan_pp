@@ -24,6 +24,11 @@ from backend.schemas import (
 
 router = APIRouter(prefix="/api/popular", tags=["popular"])
 
+# Games excluded from score-based leaderboards. Pinball Ladder has no
+# skill-based score to compare — it's a luck/randomness toy. It still
+# appears in play-count trends because popularity is a different signal.
+LEADERBOARD_EXCLUDED_GAMES = {"pinball_ladder"}
+
 
 def _decade_bucket(birth_year: int) -> tuple[int, int]:
     """1995 → (1990, 1999). 10-year birth-year bucket for 'age bracket' stats."""
@@ -338,8 +343,10 @@ def popular_leaderboards(
         ).all()
         my_ranks = {r.game_type: (int(r.rnk), int(r.best_score)) for r in my_rows}
 
+    ranked_game_types = VALID_GAME_TYPES - LEADERBOARD_EXCLUDED_GAMES
+
     # Group top rows by game_type.
-    per_game: dict[str, list] = {gt: [] for gt in VALID_GAME_TYPES}
+    per_game: dict[str, list] = {gt: [] for gt in ranked_game_types}
     for r in top_rows:
         if r.game_type not in per_game:
             continue
@@ -354,7 +361,7 @@ def popular_leaderboards(
 
     out: list[GameLeaderboard] = []
     my_display = user.display_name if user else ""
-    for game_type in sorted(VALID_GAME_TYPES):
+    for game_type in sorted(ranked_game_types):
         top = per_game.get(game_type, [])
         me_item: Optional[GameLeaderboardItem] = None
         if my_id is not None and game_type in my_ranks and not any(i.is_me for i in top):
