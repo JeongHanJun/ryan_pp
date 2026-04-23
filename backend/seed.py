@@ -65,9 +65,9 @@ CHARACTER_MAP = {
 
 # Nicknames are drawn from three pools to mimic the real 90s-born audience
 # this service targets. Ratio (implemented in _make_nickname):
-#   50%  real name + birth-year suffix  (지훈95, yujin99)
-#   20%  real name only                  (지훈, 수진)
-#   30%  witty self-aware handles        (집가고싶다, 라이언말고춘식이)
+#   50%  ID-style  (seongho9005, ksh0109, minji0412, 민지0412 등)
+#   20%  real name only  (지훈, 수진)
+#   30%  witty self-aware handles  (집가고싶다, 라이언말고춘식이)
 #
 # Real-name pools use top Korean given names among 1990s-born cohort
 # (행정안전부 신생아 통계 기반). Current popular names like "도윤/하윤/서연"
@@ -116,21 +116,44 @@ WITTY_NICKNAMES = [
     "졸려요", "내일뭐먹지", "점심메뉴추천",
 ]
 
-# Suffixes concentrated on 1990s but a few 00/01s for variety (카카오 가입 초기
-# ID를 만든 연도 등). Avoiding exact birth-year correlation intentionally so the
-# demo data doesn't look over-engineered.
-NAME_SUFFIXES = ["90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "00", "01"]
+# 한국식 3자 한자 이름을 영문 이니셜로 옮긴 pool (김성호 → ksh 등).
+# 온라인 ID에 가장 흔한 패턴 중 하나.
+INITIALS_POOL = [
+    "ksh", "ljh", "pms", "chw", "jmj", "khj", "yjh", "lsj", "sjy", "kjh",
+    "lmh", "pjs", "cys", "jhs", "jsw", "kwh", "yjs", "lhw", "kdh", "shn",
+    "pys", "chs", "jwh", "bjs", "hjh", "ojh", "mjs", "hjw", "sjh", "kyj",
+]
+
+
+def _random_mmdd(rng: random.Random) -> str:
+    # day<=28로 제한해 월말 예외(2월 등) 회피. 분포 왜곡은 미미.
+    return f"{rng.randint(1, 12):02d}{rng.randint(1, 28):02d}"
+
+
+def _random_yymm(rng: random.Random) -> str:
+    return f"{rng.randint(90, 99):02d}{rng.randint(1, 12):02d}"
+
+
+def _make_id_nickname(rng: random.Random) -> str:
+    """가입 ID 느낌의 닉네임. 네 가지 포맷에서 uniform하게 뽑음."""
+    style = rng.randint(0, 3)
+    if style == 0:
+        # 영문 풀네임 + YYMM  (예: seongho9005)
+        return f"{rng.choice(NAMES_EN_MALE_90S + NAMES_EN_FEMALE_90S)}{_random_yymm(rng)}"
+    if style == 1:
+        # 이니셜 + MMDD  (예: ksh0109)
+        return f"{rng.choice(INITIALS_POOL)}{_random_mmdd(rng)}"
+    if style == 2:
+        # 영문 풀네임 + MMDD  (예: minji0412)
+        return f"{rng.choice(NAMES_EN_MALE_90S + NAMES_EN_FEMALE_90S)}{_random_mmdd(rng)}"
+    # 한글 이름 + MMDD  (싸이월드 시절 고전 패턴, 예: 민지0412)
+    return f"{rng.choice(NAMES_KR_MALE_90S + NAMES_KR_FEMALE_90S)}{_random_mmdd(rng)}"
 
 
 def _make_nickname(rng: random.Random) -> str:
     r = rng.random()
     if r < 0.50:
-        # 실명 + 출생년도 2자리. 약 30%는 영문 표기로 섞어 현실감을 살림.
-        if rng.random() < 0.3:
-            base = rng.choice(NAMES_EN_MALE_90S + NAMES_EN_FEMALE_90S)
-        else:
-            base = rng.choice(NAMES_KR_MALE_90S + NAMES_KR_FEMALE_90S)
-        return f"{base}{rng.choice(NAME_SUFFIXES)}"
+        return _make_id_nickname(rng)
     if r < 0.70:
         return rng.choice(NAMES_KR_MALE_90S + NAMES_KR_FEMALE_90S)
     return rng.choice(WITTY_NICKNAMES)
