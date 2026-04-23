@@ -63,16 +63,77 @@ CHARACTER_MAP = {
     },
 }
 
-# Mix of plausible Korean given names, friend names, and casual nicknames.
-NICKNAMES = [
-    "민지", "서연", "지호", "도윤", "하준", "수빈", "예준", "시우", "채원", "유나",
-    "다은", "지우", "윤서", "지아", "유진", "하윤", "서준", "지훈", "건우", "민준",
-    "예린", "수아", "서윤", "지원", "주원", "은우", "민재", "태윤", "현우", "승민",
-    "라이언", "춘식이", "무지", "네오", "어피치", "프로도",
-    "Ryan", "Luna", "Jay", "Max", "Lily", "Leo", "Mia", "Ben", "Sam", "Zoe",
-    "달토끼", "해돋이", "별빛", "바람", "구름", "노을", "햇살", "모카", "라떼",
-    "카푸치노", "아메리카노",
+# Nicknames are drawn from three pools to mimic the real 90s-born audience
+# this service targets. Ratio (implemented in _make_nickname):
+#   50%  real name + birth-year suffix  (지훈95, yujin99)
+#   20%  real name only                  (지훈, 수진)
+#   30%  witty self-aware handles        (집가고싶다, 라이언말고춘식이)
+#
+# Real-name pools use top Korean given names among 1990s-born cohort
+# (행정안전부 신생아 통계 기반). Current popular names like "도윤/하윤/서연"
+# are deliberately excluded — they skew 2005–2015 births.
+
+NAMES_KR_MALE_90S = [
+    "지훈", "민수", "성민", "동현", "현우", "민호", "민재", "진우", "준호", "정훈",
+    "재영", "영훈", "상훈", "승현", "승준", "종현", "재현", "태현", "병훈", "기훈",
+    "정민", "준영", "재성", "태훈", "민규", "진영", "승민", "용준", "진호", "성호",
 ]
+
+NAMES_KR_FEMALE_90S = [
+    "지혜", "수진", "은영", "은정", "지은", "민지", "유진", "예진", "현정", "지영",
+    "혜진", "주연", "혜원", "소영", "미정", "지현", "지수", "유리", "민정", "보람",
+    "은주", "수빈", "정은", "수연", "미진", "아름", "가영", "은지", "유정", "영주",
+]
+
+# Romanizations — kept lowercase to match typical ID-style writing.
+NAMES_EN_MALE_90S = [
+    "jihun", "minsu", "sungmin", "donghyun", "hyunwoo", "minho", "minjae",
+    "junho", "junyoung", "sunghyun", "jaehyun", "taehyun", "jinwoo",
+]
+
+NAMES_EN_FEMALE_90S = [
+    "jihye", "sujin", "eunyoung", "jieun", "minji", "yujin", "yejin",
+    "hyunjung", "jiyoung", "hyejin", "juyeon", "soyoung", "jihyun", "jisoo",
+    "yuri", "boram", "suyeon", "gayoung", "eunji",
+]
+
+WITTY_NICKNAMES = [
+    # 직장인/현생 자조
+    "집가고싶다", "퇴근하고싶다", "월요일싫어", "내일은공휴일", "오늘도야근",
+    "주말까지3일", "아무것도안하고싶다", "다이어트는내일부터", "회식싫어",
+    "이번생은망했어", "다음생엔부자", "영혼을팔아서", "사표쓰고싶다",
+    "월급날기다려", "로또1등가자", "통장이비어있어", "카페인없이못삼", "아아한잔해요",
+    # 장난/도발
+    "너는누구냐", "나는누구여긴어디", "다들뭐해요", "누구세요", "왜보세요", "관심없어요",
+    # 카카오프렌즈 패러디
+    "라이언말고춘식이", "춘식이가최고", "무지는바나나", "어피치는복숭아",
+    "네오가나보다잘생김", "프로도랑결혼할래",
+    # 90년대생 추억
+    "HOT팬클럽", "젝키vs핑클", "세일러문변신", "추억의둘리", "포켓몬마스터",
+    "디지몬어드벤처", "삐삐치는중", "버디버디추억", "싸이월드감성",
+    # 음식/일상
+    "치킨시켜줘", "라면먹고갈래", "김치찌개한그릇", "배고파요", "잠만잘래",
+    "졸려요", "내일뭐먹지", "점심메뉴추천",
+]
+
+# Suffixes concentrated on 1990s but a few 00/01s for variety (카카오 가입 초기
+# ID를 만든 연도 등). Avoiding exact birth-year correlation intentionally so the
+# demo data doesn't look over-engineered.
+NAME_SUFFIXES = ["90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "00", "01"]
+
+
+def _make_nickname(rng: random.Random) -> str:
+    r = rng.random()
+    if r < 0.50:
+        # 실명 + 출생년도 2자리. 약 30%는 영문 표기로 섞어 현실감을 살림.
+        if rng.random() < 0.3:
+            base = rng.choice(NAMES_EN_MALE_90S + NAMES_EN_FEMALE_90S)
+        else:
+            base = rng.choice(NAMES_KR_MALE_90S + NAMES_KR_FEMALE_90S)
+        return f"{base}{rng.choice(NAME_SUFFIXES)}"
+    if r < 0.70:
+        return rng.choice(NAMES_KR_MALE_90S + NAMES_KR_FEMALE_90S)
+    return rng.choice(WITTY_NICKNAMES)
 
 # Per-game score range: (min, mode, max). Used by random.triangular — skews toward
 # the mode like real score distributions (most players middling, a few elite).
@@ -163,7 +224,7 @@ def seed(db: Session, n_users: int = 80, seed_val: int = 42) -> int:
     # Users
     users: list[User] = []
     for i in range(n_users):
-        nickname = rng.choice(NICKNAMES)
+        nickname = _make_nickname(rng)
         birth_year = rng.randint(1990, 2005)
         created_at = now - timedelta(
             days=rng.randint(0, 30),
